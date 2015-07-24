@@ -1,0 +1,3 @@
+#! /bin/bash
+
+sudo docker run -it --rm --name gospel-study-tools gospel-study-tools
