@@ -1,0 +1,3 @@
+pass=$(cat ../gst-db/PASSWORD)
+
+docker run -it --rm -e POSTGRES_PASSWORD=$pass --link gospel-study-tools-db:postgres --name setup-gst -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:0.10 node setup.js

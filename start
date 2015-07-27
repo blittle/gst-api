@@ -1,3 +1,5 @@
 #! /bin/bash
 
-sudo docker run -it --rm --name gospel-study-tools gospel-study-tools
+pass=$(cat ../gst-db/PASSWORD)
+
+docker run -it --rm --link gospel-study-tools-db:postgres -e POSTGRES_PASSWORD=$pass --name gospel-study-tools gospel-study-tools
