@@ -1,7 +1,7 @@
 var JWT   = require('jsonwebtoken');  // used to sign our content
 var aguid = require('aguid');
 
-var SECRET = "0RS2GuesLZdAiAUevfwfBZ34";
+var SECRET = require('../secret.js');
 var GOOGLE_CLIENT_ID = "750179824923-go79gjlsik6vupafrp65q4s3cuu2dcpk.apps.googleusercontent.com";
 
 var people = {
