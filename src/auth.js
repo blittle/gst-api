@@ -1,15 +1,12 @@
-var JWT   = require('jsonwebtoken');  // used to sign our content
-var aguid = require('aguid');
+let JWT   = require('jsonwebtoken');  // used to sign our content
+let aguid = require('aguid');
+let _ = require('lodash');
 
-var SECRET = require('../secret.js');
-var GOOGLE_CLIENT_ID = "750179824923-go79gjlsik6vupafrp65q4s3cuu2dcpk.apps.googleusercontent.com";
+let { getUser, createUser } = require('./db/users.js');
+let { addSession, getSession } = require('./db/sessions.js');
 
-var people = {
-	1: {
-		id: 1,
-		name: 'Jen Jones'
-	}
-};
+const SECRET = require('../secret.js');
+const GOOGLE_CLIENT_ID = "750179824923-go79gjlsik6vupafrp65q4s3cuu2dcpk.apps.googleusercontent.com";
 
 module.exports = {
 	handleAuth: function(request, reply) {
@@ -17,23 +14,59 @@ module.exports = {
 			return reply('Authentication failed due to: ' + request.auth.error.message);
 		}
 
-		var payload = {
-			id: aguid(),
-			user: aguid(request.auth.credentials.profile.emails[0].value)
+		let email = request.auth.credentials.profile.emails[0].value;
+		//console.log(request.auth.credentials.profile);
+		let id = aguid(email);
+
+		function createSession() {
+			let payload = { id }
+			const token = JWT.sign(payload, SECRET);
+			addSession({
+				token: token,
+				user_id: id
+			}).then(() => {
+				reply(
+					`
+					<h3>Authorization successful</h3>
+					<input type="hidden" id='GST_AUTH_TOKEN' value='${token}'/>
+					`
+				)
+					.header("Authorization", token);
+			}).catch(console.error);
 		}
 
-		var token = JWT.sign(payload, SECRET);
+		getUser(email)
+			.then(function(resp) {
+				if (!resp.length) {
+					createUser({
+						id: id,
+						name: request.auth.credentials.profile.displayName,
+						email: email,
+						avatar: _.property('auth.credentials.profile.raw.image.url')(request),
+						created: 'now'
+					}).then(createSession).catch(console.error);
+				} else {
+					createSession()
+				}
+			})
+			.catch(console.error);
 
-		people[payload.id] = {
-			id: payload.id,
-			user: payload.user,
-			name: request.auth.credentials.profile.displayName
-		}
-
-		reply('<pre>' + token + '</pre>');
 	},
 
 	validate: function(decoded, request, callback) {
+
+		getSession(decoded.id)
+			.then((result) => {
+				if (result.length) {
+					return callback(null, true);
+				} else {
+					return callback(null, false);
+				}
+			})
+			.catch((err) => {
+				console.error(err);
+				callback(null, false);
+			});
 		if (!people[decoded.id]) {
 			return callback(null, false);
 		} else {

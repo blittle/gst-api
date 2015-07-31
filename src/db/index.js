@@ -11,6 +11,12 @@ module.exports = function(query) {
 			console.log("SUCCESS")
 		}
 
+		let originalQuery = client.query;
+		client.query = function(queryString, ...rest) {
+			console.log('Executing query: ', queryString);
+			originalQuery.apply(client, arguments);
+		}
+
 		query(client, done);
 	});
 }

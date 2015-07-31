@@ -6,7 +6,7 @@ var server = new Hapi.Server();
 var auth = require('./src/auth');
 
 server.connection({
-	host: 'localhost',
+	host: '0.0.0.0',
 	port: 4567
 });
 
@@ -18,7 +18,7 @@ server.register(Bell, function(err) {
 		isSecure: false,
 		clientId: auth.GOOGLE_CLIENT_ID,
 		clientSecret: auth.SECRET,
-		location: server.info.uri
+		location: 'http://localhost:4567' //server.info.uri
 	});
 
 	server.route({
