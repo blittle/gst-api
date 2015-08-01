@@ -7,7 +7,10 @@ var auth = require('./src/auth');
 
 server.connection({
 	host: '0.0.0.0',
-	port: 4567
+	port: 4567,
+	routes: {
+		cors: true
+	}
 });
 
 server.register(Bell, function(err) {
@@ -60,7 +63,9 @@ server.register(require('hapi-auth-jwt2'), function(err) {
 				text: 'Token not required'
 			});
 		}
-	}, {
+	},
+	require('./src/routes/users').get,
+	{
 		method: 'GET',
 		path: '/restricted',
 		config: {

@@ -47,7 +47,7 @@ exports.getSession = (id) => {
 		db((client, done) => {
 			client.query(
 				`
-				SELECT * FROM SESSIONS WHERE USER_ID=${id};
+				SELECT * FROM SESSIONS WHERE USER_ID='${id}';
 				`, (err, result) => {
 					if (err) {
 						reject(err);

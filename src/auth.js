@@ -38,11 +38,13 @@ module.exports = {
 		getUser(email)
 			.then(function(resp) {
 				if (!resp.length) {
+					let avatar = _.property('auth.credentials.profile.raw.image.url')(request);
+
 					createUser({
 						id: id,
-						name: request.auth.credentials.profile.displayName,
-						email: email,
-						avatar: _.property('auth.credentials.profile.raw.image.url')(request),
+						name: request.auth.credentials.profile.displayName.trim(),
+						email: email.trim(),
+						avatar: avatar ? avatar.trim() : null,
 						created: 'now'
 					}).then(createSession).catch(console.error);
 				} else {
@@ -67,11 +69,6 @@ module.exports = {
 				console.error(err);
 				callback(null, false);
 			});
-		if (!people[decoded.id]) {
-			return callback(null, false);
-		} else {
-			return callback(null, true);
-		}
 	},
 
 	SECRET: SECRET,

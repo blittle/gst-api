@@ -43,6 +43,24 @@ exports.getUser = function(email) {
 	});
 }
 
+exports.getUserById = function(id) {
+	return new Promise(function(resolve, reject) {
+		db(function(client, done) {
+			client.query(
+				`SELECT * FROM USERS WHERE ID='${id}';`,
+				function(err, result) {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result.rows);
+					}
+					done();
+				}
+			)
+		});
+	});
+}
+
 exports.createUser = function(user) {
 	return new Promise(function(resolve, reject) {
 		db(function(client, done) {
