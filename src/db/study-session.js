@@ -21,6 +21,23 @@ exports.createTable = function() {
 	});
 }
 
-exports.addStudySession = function() {
+exports.addStudySession = function(studySession) {
+	let {
+		user_id, started, ended
+	} = studySession;
 
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+			`
+			INSERT INTO study_sessions (user_id, started, ended)
+			VALUES ($1, $2, $3) RETURNING id;
+			`, [user_id, started, ended], (err, result) => {
+					if (err) return reject(err);
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
 }

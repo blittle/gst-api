@@ -65,6 +65,7 @@ server.register(require('hapi-auth-jwt2'), function(err) {
 		}
 	},
 	require('./src/routes/users').get,
+	require('./src/routes/study-session').post,
 	{
 		method: 'GET',
 		path: '/restricted',
