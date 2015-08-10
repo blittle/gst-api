@@ -92,7 +92,7 @@ exports.addUpdateContentAggregate = function(aggregate) {
 								'now',
 								aggregate.time
 							], (err, result) => {
-								if (err) reject(err) && done();
+								if (err) return reject(err) && done();
 								resolve(result);
 								done();
 							}
@@ -101,4 +101,27 @@ exports.addUpdateContentAggregate = function(aggregate) {
         });
     });
   });
+}
+
+exports.getTopContent = function(user_id, count) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			console.log(
+			)
+			client.query(
+				`
+				SELECT content_type, content_l1, content_l2, content_l3, content_l4, total_seconds
+				FROM content_aggregate
+				WHERE user_id=$1
+				ORDER BY total_seconds DESC
+				LIMIT $2;
+				`, [user_id, count],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
 }
