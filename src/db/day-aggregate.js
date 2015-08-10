@@ -70,3 +70,24 @@ exports.addUpdateDayAggregate = function(aggregate) {
 		});
 	})
 }
+
+exports.getLastYear = function(user_id) {
+	var yearAgo = new Date(new Date().getTime() - 31556900000);
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`SELECT day,total_seconds
+					FROM day_aggregate
+					WHERE day >= $2
+					AND user_id = $1
+					ORDER BY day DESC;`,
+				[user_id, yearAgo],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}
