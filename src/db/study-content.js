@@ -41,7 +41,7 @@ exports.addStudyContent = function(content) {
 					content.l4,
 					content.time
 				], (err, result) => {
-					if (err) return reject(err);
+					if (err) return done() && reject(err);
 					resolve(result);
 					done();
 				}
