@@ -1,15 +1,15 @@
-let { getLastYear } = require('../db/day-aggregate.js');
+let { getDayAggregation } = require('../db/day-aggregate.js');
 let { getTopContent } = require('../db/content-aggregate.js');
 
-exports.getLastYear = {
+exports.dayAggregation = {
 	method: 'GET',
-	path: '/study-content/last-year',
+	path: '/study-content/day-aggregation/{count}',
 	config: {
 		auth: 'jwt'
 	},
 	handler: function(request, reply) {
     const user_id = request.auth.credentials.id;
-		getLastYear(user_id)
+		getDayAggregation(user_id, request.params.count)
 			.then((result) => {
 				reply({
 					success: true,

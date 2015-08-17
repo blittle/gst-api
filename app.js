@@ -66,7 +66,7 @@ server.register(require('hapi-auth-jwt2'), function(err) {
 	},
 	require('./src/routes/users').get,
 	require('./src/routes/study-session').post,
-	require('./src/routes/study-content').getLastYear,
+	require('./src/routes/study-content').dayAggregation,
 	require('./src/routes/study-content').getTopContent,
 	{
 		method: 'GET',

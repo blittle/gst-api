@@ -1,5 +1,7 @@
 var db = require('./');
 
+const DAY = 24 * 60 * 60 * 1000;
+
 exports.createTable = function() {
 	db(function(client, done) {
 		client.query('CREATE TABLE DAY_AGGREGATE(' +
@@ -71,8 +73,8 @@ exports.addUpdateDayAggregate = function(aggregate) {
 	})
 }
 
-exports.getLastYear = function(user_id) {
-	var yearAgo = new Date(new Date().getTime() - 31556900000);
+exports.getDayAggregation = function getDays(user_id, days) {
+	var yearAgo = new Date(new Date().getTime() - (days * DAY));
 	return new Promise((resolve, reject) => {
 		db(function(client, done) {
 			client.query(
