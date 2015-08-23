@@ -1,5 +1,5 @@
 let { getDayAggregation } = require('../db/day-aggregate.js');
-let { getTopContent } = require('../db/content-aggregate.js');
+let { getTopContent, getRecentContent } = require('../db/content-aggregate.js');
 
 exports.dayAggregation = {
 	method: 'GET',
@@ -25,19 +25,22 @@ exports.dayAggregation = {
 	}
 }
 
-exports.getTopContent = {
+exports.getContent = {
 	method: 'GET',
-	path: '/study-content/top',
+	path: '/study-content',
 	config: {
 		auth: 'jwt'
 	},
 	handler: function(request, reply) {
     const user_id = request.auth.credentials.id;
-		getTopContent(user_id, 10)
+		Promise.all([getTopContent(user_id, 5), getRecentContent(user_id, 5)])
 			.then((result) => {
 				reply({
 					success: true,
-					data: result.rows
+					data: {
+						top: result[0].rows,
+						recent: result[1].rows
+					}
 				})
 			})
 			.catch((err) => {

@@ -52,6 +52,7 @@ exports.addUpdateContentAggregate = function(aggregate) {
 
           if (result.rows.length) {
             // The record already exists so update it
+					console.log('update');
             client.query(
               `
 							UPDATE content_aggregate
@@ -77,6 +78,7 @@ exports.addUpdateContentAggregate = function(aggregate) {
 							}
             )
           } else {
+					console.log('new ');
             // Create a new record
 						client.query(
 							`
@@ -106,14 +108,33 @@ exports.addUpdateContentAggregate = function(aggregate) {
 exports.getTopContent = function(user_id, count) {
 	return new Promise((resolve, reject) => {
 		db(function(client, done) {
-			console.log(
-			)
 			client.query(
 				`
 				SELECT content_type, content_l1, content_l2, content_l3, content_l4, total_seconds
 				FROM content_aggregate
 				WHERE user_id=$1
 				ORDER BY total_seconds DESC
+				LIMIT $2;
+				`, [user_id, count],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}
+
+exports.getRecentContent = function(user_id, count) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				SELECT content_type, content_l1, content_l2, content_l3, content_l4, last_update
+				FROM content_aggregate
+				WHERE user_id=$1
+				ORDER BY LAST_UPDATE DESC
 				LIMIT $2;
 				`, [user_id, count],
 				(err, result) => {

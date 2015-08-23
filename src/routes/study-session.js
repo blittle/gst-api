@@ -15,6 +15,10 @@ function getDayTimeFromDate(time) {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
 
+function trim(val) {
+	return val ? (val+'').trim() : '';
+}
+
 exports.post = {
   method: 'POST',
   path: '/study-sessions',
@@ -34,11 +38,11 @@ exports.post = {
       let contentPromises = request.payload.resources.map((resource) => {
         return addStudyContent({
           session_id: result.rows[0].id,
-          type: resource.type,
-          l1: resource.l1,
-          l2: resource.l2,
-          l3: resource.l3,
-          l4: resource.l4,
+          type: trim(resource.type),
+          l1: trim(resource.l1),
+          l2: trim(resource.l2),
+          l3: trim(resource.l3),
+          l4: trim(resource.l4),
           time: Math.floor(resource.time / 1000)
         })
       });
@@ -46,11 +50,11 @@ exports.post = {
       let aggregatePromises = request.payload.resources.map((resource) => {
         return addUpdateContentAggregate({
           user_id: user_id,
-          type: resource.type,
-          l1: resource.l1,
-          l2: resource.l2,
-          l3: resource.l3,
-          l4: resource.l4,
+          type: trim(resource.type),
+          l1: trim(resource.l1),
+          l2: trim(resource.l2),
+          l3: trim(resource.l3),
+          l4: trim(resource.l4),
           time: Math.floor(resource.time / 1000)
         })
       });

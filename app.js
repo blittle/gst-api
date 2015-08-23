@@ -1,5 +1,6 @@
 var Hapi = require('hapi');
 var Bell = require('bell');
+var test = require('./test');
 
 var server = new Hapi.Server();
 
@@ -67,7 +68,7 @@ server.register(require('hapi-auth-jwt2'), function(err) {
 	require('./src/routes/users').get,
 	require('./src/routes/study-session').post,
 	require('./src/routes/study-content').dayAggregation,
-	require('./src/routes/study-content').getTopContent,
+	require('./src/routes/study-content').getContent,
 	{
 		method: 'GET',
 		path: '/restricted',
@@ -85,4 +86,5 @@ server.register(require('hapi-auth-jwt2'), function(err) {
 
 server.start(function(err) {
 	console.log('Server started at:', server.info.uri);
+	//	test();
 });
