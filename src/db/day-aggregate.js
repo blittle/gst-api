@@ -74,7 +74,11 @@ exports.addUpdateDayAggregate = function(aggregate) {
 }
 
 exports.getDayAggregation = function getDays(user_id, days) {
-	var yearAgo = new Date(new Date().getTime() - (days * DAY));
+	var today = new Date();
+	var noTimeToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+	var searchDate = new Date(noTimeToday.getTime() - ( days * DAY ));
+
 	return new Promise((resolve, reject) => {
 		db(function(client, done) {
 			client.query(
@@ -83,7 +87,7 @@ exports.getDayAggregation = function getDays(user_id, days) {
 					WHERE day >= $2
 					AND user_id = $1
 					ORDER BY day DESC;`,
-				[user_id, yearAgo],
+				[user_id, searchDate],
 				(err, result) => {
 					if (err) return reject(err) && done();
 					resolve(result);
