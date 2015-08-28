@@ -33,7 +33,7 @@ exports.getContent = {
 	},
 	handler: function(request, reply) {
     const user_id = request.auth.credentials.id;
-		Promise.all([getTopContent(user_id, 5), getRecentContent(user_id, 5)])
+		Promise.all([getTopContent(user_id, 200), getRecentContent(user_id, 5)])
 			.then((result) => {
 				reply({
 					success: true,
