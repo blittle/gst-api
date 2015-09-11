@@ -33,7 +33,6 @@ exports.post = {
       started: new Date(request.payload.startTime),
       ended: new Date(request.payload.endTime)
     }).then((result) => {
-      console.log(result.rows[0].id);
 
       let contentPromises = request.payload.resources.map((resource) => {
         return addStudyContent({

@@ -52,7 +52,6 @@ exports.addUpdateContentAggregate = function(aggregate) {
 
           if (result.rows.length) {
             // The record already exists so update it
-					console.log('update');
             client.query(
               `
 							UPDATE content_aggregate
@@ -78,7 +77,6 @@ exports.addUpdateContentAggregate = function(aggregate) {
 							}
             )
           } else {
-					console.log('new ');
             // Create a new record
 						client.query(
 							`
@@ -136,6 +134,23 @@ exports.getRecentContent = function(user_id, count) {
 				WHERE user_id=$1
 				ORDER BY LAST_UPDATE DESC
 				LIMIT $2;
+				`, [user_id, count],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}
+
+exports.deleteContentAggregations = function(user_id) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				DELETE FROM content_aggregate where user_id=${user_id};
 				`, [user_id, count],
 				(err, result) => {
 					if (err) return reject(err) && done();

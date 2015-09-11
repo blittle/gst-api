@@ -60,3 +60,22 @@ exports.getSession = (id) => {
 		});
 	});
 }
+
+exports.deleteUserSessions = (id) => {
+	return new Promise((resolve, reject) => {
+		db((client, done) => {
+			client.query(
+				`
+			 DELETE FROM SESSIONS WHERE USER_ID='${id}';
+				`, (err, result) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result.rows);
+					}
+					done();
+				}
+			)
+		});
+	});
+}

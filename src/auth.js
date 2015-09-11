@@ -11,7 +11,8 @@ const GOOGLE_CLIENT_ID = "750179824923-go79gjlsik6vupafrp65q4s3cuu2dcpk.apps.goo
 module.exports = {
 	handleAuth: function(request, reply) {
 		if (!request.auth.isAuthenticated) {
-			return reply('Authentication failed due to: ' + request.auth.error.message);
+			return reply.redirect('/authenticate/google');
+			//return reply('Authentication failed due to: ' + request.auth.error.message);
 		}
 
 		let email = request.auth.credentials.profile.emails[0].value;

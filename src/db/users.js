@@ -25,6 +25,24 @@ exports.createTable = function() {
 	});
 }
 
+exports.deleteUser = function(id) {
+	return new Promise(function(resolve, reject) {
+		db(function(client, done) {
+			client.query(
+				`DELETE FROM USERS WHERE ID='${id}';`,
+				function(err, result) {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result.rows);
+					}
+					done();
+				}
+			)
+		});
+	});
+}
+
 exports.getUser = function(email) {
 	return new Promise(function(resolve, reject) {
 		db(function(client, done) {

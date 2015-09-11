@@ -97,3 +97,20 @@ exports.getDayAggregation = function getDays(user_id, days) {
 		});
 	});
 }
+
+exports.deleteDayAggregations = function(user_id) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				DELETE FROM day_aggregate where user_id=${user_id};
+				`, [user_id, count],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}

@@ -66,22 +66,12 @@ server.register(require('hapi-auth-jwt2'), function(err) {
 		}
 	},
 	require('./src/routes/users').get,
+	require('./src/routes/users').logout,
+	require('./src/routes/users').remove,
 	require('./src/routes/study-session').post,
 	require('./src/routes/study-content').dayAggregation,
-	require('./src/routes/study-content').getContent,
-	{
-		method: 'GET',
-		path: '/restricted',
-		config: {
-			auth: 'jwt'
-		},
-		handler: function(request, reply) {
-			reply({
-				text: 'You used a Token!'
-			})
-			.header("Authorization", request.headers.authorization);
-		}
-	}]);
+	require('./src/routes/study-content').getContent
+	])
 });
 
 server.start(function(err) {

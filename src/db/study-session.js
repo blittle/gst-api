@@ -41,3 +41,22 @@ exports.addStudySession = function(studySession) {
 		});
 	});
 }
+
+exports.deleteUserStudySessions = function(user_id) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				DELETE
+				FROM study_sessions
+			  WHERE user_id=${user_id};
+				`,
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}

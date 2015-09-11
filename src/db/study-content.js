@@ -49,3 +49,24 @@ exports.addStudyContent = function(content) {
 		});
 	});
 }
+
+exports.deleteUserStudyContent = function(user_id) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				DELETE
+				FROM study_content SC
+					 USING study_sessions SS
+					 WHERE SS.id = SC.session_id AND
+						 SS.user_id=${user_id};
+				`,
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}
