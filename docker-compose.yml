@@ -1,0 +1,16 @@
+api:
+  image: blittle/gospel-study-tools
+  ports:
+    - "4567:4567"
+  links:
+    - postgres
+postgres:
+  image: postgres:9.4
+  volumes:
+    - /home/blitte/dev/gst-db/volumes/data:/var/lib/postgresql/data
+static:
+  image: blittle/gst-static
+  ports:
+    - "80:80"
+  volumes:
+    - /home/blittle/dev/gst-static/public_html:/usr/share/nginx/html:ro
