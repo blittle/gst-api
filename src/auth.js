@@ -12,7 +12,7 @@ module.exports = {
 	handleAuth: function(request, reply) {
 		if (!request.auth.isAuthenticated) {
 			console.log(request.auth.error.message);
-			return reply.redirect('/authenticate/google');
+			return reply.redirect('/api/authenticate/google');
 			//return reply('Authentication failed due to: ' + request.auth.error.message);
 		}
 
@@ -31,7 +31,7 @@ module.exports = {
 					`
 					<input type="hidden" id='GST_AUTH_TOKEN' value='${token}'/>
 					<script>setTimeout(function() {
-						window.location = "http://gst.dev";
+						window.location = "https://gst.dev";
 					}, 100)</script>
 					`
 				)

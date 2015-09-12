@@ -6,6 +6,13 @@ var server = new Hapi.Server();
 
 var auth = require('./src/auth');
 
+require('./src/db/users.js').createTable();
+require('./src/db/sessions.js').createTable();
+require('./src/db/study-session.js').createTable();
+require('./src/db/study-content.js').createTable();
+require('./src/db/content-aggregate.js').createTable();
+require('./src/db/day-aggregate.js').createTable();
+
 server.connection({
 	host: '0.0.0.0',
 	port: 4567,
@@ -22,7 +29,7 @@ server.register(Bell, function(err) {
 		isSecure: false,
 		clientId: auth.GOOGLE_CLIENT_ID,
 		clientSecret: auth.SECRET,
-		location: 'http://gst.dev' //server.info.uri
+		location: 'https://gst.dev' //server.info.uri
 	});
 
 	server.route({
