@@ -22,12 +22,12 @@ server.register(Bell, function(err) {
 		isSecure: false,
 		clientId: auth.GOOGLE_CLIENT_ID,
 		clientSecret: auth.SECRET,
-		location: 'http://localhost:4567' //server.info.uri
+		location: 'http://gst.dev' //server.info.uri
 	});
 
 	server.route({
 		method: '*',
-		path: '/authenticate/google',
+		path: '/api/authenticate/google',
 		config: {
 			auth: {
 				strategy: 'google',
@@ -55,7 +55,7 @@ server.register(require('hapi-auth-jwt2'), function(err) {
 
 	server.route([{
 		method: "GET",
-		path: "/",
+		path: "/api",
 		config: {
 			auth: false
 		},

@@ -1,3 +1,3 @@
 #! /bin/bash
 
-docker build -t gospel-study-tools .
+docker build -t blittle/gospel-study-tools . && docker push blittle/gospel-study-tools

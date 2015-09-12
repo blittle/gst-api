@@ -1,0 +1,31 @@
+api:
+  image: blittle/gospel-study-tools
+  expose:
+    - "4567"
+  ports:
+    - "4567:4567"
+  links:
+    - postgres
+postgres:
+  image: postgres:9.4
+  volumes:
+    - /home/blitte/dev/gst-db/volumes/data:/var/lib/postgresql/data
+static:
+  image: blittle/gst-static
+  expose:
+    - "80"
+  volumes:
+    - /home/blittle/dev/gst-static/public_html:/usr/share/nginx/html:ro
+proxy:
+  image: nginx
+  volumes:
+    - /home/blittle/dev/gst-api/nginx.conf:/etc/nginx/nginx.conf:ro
+    - /home/blittle/dev/gst-api/cert.crt:/etc/nginx/cert.crt:ro
+    - /home/blittle/dev/gst-api/cert.key:/etc/nginx/cert.key:ro
+    - /home/blittle/dev/gst-api/error.log:/etc/nginx/error.log
+    - /home/blittle/dev/gst-static/public_html:/usr/share/nginx/html:ro
+  ports:
+    - "80:80"
+  links:
+    - static
+    - api

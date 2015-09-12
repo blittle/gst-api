@@ -3,7 +3,7 @@ let { getTopContent, getRecentContent } = require('../db/content-aggregate.js');
 
 exports.dayAggregation = {
 	method: 'GET',
-	path: '/study-content/day-aggregation/{count}',
+	path: '/api/study-content/day-aggregation/{count}',
 	config: {
 		auth: 'jwt'
 	},
@@ -27,7 +27,7 @@ exports.dayAggregation = {
 
 exports.getContent = {
 	method: 'GET',
-	path: '/study-content',
+	path: '/api/study-content',
 	config: {
 		auth: 'jwt'
 	},

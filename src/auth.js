@@ -5,12 +5,13 @@ let _ = require('lodash');
 let { getUser, createUser } = require('./db/users.js');
 let { addSession, getSession } = require('./db/sessions.js');
 
-const SECRET = require('../secret.js');
+const SECRET = process.env.GOOGLE_SECRET;
 const GOOGLE_CLIENT_ID = "750179824923-go79gjlsik6vupafrp65q4s3cuu2dcpk.apps.googleusercontent.com";
 
 module.exports = {
 	handleAuth: function(request, reply) {
 		if (!request.auth.isAuthenticated) {
+			console.log(request.auth.error.message);
 			return reply.redirect('/authenticate/google');
 			//return reply('Authentication failed due to: ' + request.auth.error.message);
 		}

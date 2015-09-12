@@ -21,7 +21,7 @@ function trim(val) {
 
 exports.post = {
   method: 'POST',
-  path: '/study-sessions',
+	path: '/api/study-sessions',
   config: {
     auth: 'jwt'
   },

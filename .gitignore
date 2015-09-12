@@ -28,3 +28,4 @@ node_modules
 
 # Secret file
 secret.js
+docker-compose.yml

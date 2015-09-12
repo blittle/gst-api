@@ -10,7 +10,7 @@ let JSON = require('json3');
 
 exports.get = {
 	method: 'GET',
-	path: '/authenticated-user',
+	path: '/api/authenticated-user',
 	config: {
 		auth: 'jwt'
 	},
@@ -28,7 +28,7 @@ exports.get = {
 
 exports.remove = {
 	method: 'DELETE',
-	path: '/authenticated-user',
+	path: '/api/authenticated-user',
 	config: {
 		auth: 'jwt'
 	},
@@ -65,7 +65,7 @@ exports.remove = {
 
 exports.logout = {
 	method: 'POST',
-	path: '/authenticated-user/logout',
+	path: '/api/authenticated-user/logout',
 	config: {
 		auth: 'jwt'
 	},
