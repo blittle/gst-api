@@ -30,6 +30,9 @@ module.exports = {
 				reply(
 					`
 					<input type="hidden" id='GST_AUTH_TOKEN' value='${token}'/>
+					<script>setTimeout(function() {
+						window.location = "http://gst.dev";
+					}, 100)</script>
 					`
 				)
 					.header("Authorization", token);
