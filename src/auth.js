@@ -29,7 +29,6 @@ module.exports = {
 			}).then(() => {
 				reply(
 					`
-					<h3>Authorization successful</h3>
 					<input type="hidden" id='GST_AUTH_TOKEN' value='${token}'/>
 					`
 				)
