@@ -29,7 +29,7 @@ server.register(Bell, function(err) {
 		isSecure: false,
 		clientId: auth.GOOGLE_CLIENT_ID,
 		clientSecret: auth.SECRET,
-		location: 'https://gst.dev' //server.info.uri
+		location: 'https://www.gospelstudy.tools' //server.info.uri
 	});
 
 	server.route({

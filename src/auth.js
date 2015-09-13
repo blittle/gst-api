@@ -31,7 +31,7 @@ module.exports = {
 					`
 					<input type="hidden" id='GST_AUTH_TOKEN' value='${token}'/>
 					<script>setTimeout(function() {
-						window.location = "https://gst.dev";
+						window.location = "https://www.gospelstudy.tools";
 					}, 100)</script>
 					`
 				)
