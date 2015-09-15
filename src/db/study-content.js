@@ -61,8 +61,9 @@ exports.deleteUserStudyContent = function(user_id) {
 				FROM study_content SC
 					 USING study_sessions SS
 					 WHERE SS.id = SC.session_id AND
-						 SS.user_id=${user_id};
+						 SS.user_id=$1;
 				`,
+				[user_id],
 				(err, result) => {
 					if (err) return reject(err) && done();
 					resolve(result);

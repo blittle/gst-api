@@ -66,8 +66,8 @@ exports.deleteUserSessions = (id) => {
 		db((client, done) => {
 			client.query(
 				`
-			 DELETE FROM SESSIONS WHERE USER_ID='${id}';
-				`, (err, result) => {
+			 DELETE FROM SESSIONS WHERE USER_ID=$1;
+				`, [id], (err, result) => {
 					if (err) {
 						reject(err);
 					} else {

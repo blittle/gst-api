@@ -49,8 +49,9 @@ exports.deleteUserStudySessions = function(user_id) {
 				`
 				DELETE
 				FROM study_sessions
-			  WHERE user_id=${user_id};
+			  WHERE user_id=$1;
 				`,
+				[user_id],
 				(err, result) => {
 					if (err) return reject(err) && done();
 					resolve(result);

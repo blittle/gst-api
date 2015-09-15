@@ -103,8 +103,8 @@ exports.deleteDayAggregations = function(user_id) {
 		db(function(client, done) {
 			client.query(
 				`
-				DELETE FROM day_aggregate where user_id=${user_id};
-				`, [user_id, count],
+				DELETE FROM day_aggregate where user_id=$1;
+				`, [user_id],
 				(err, result) => {
 					if (err) return reject(err) && done();
 					resolve(result);

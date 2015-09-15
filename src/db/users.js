@@ -29,7 +29,8 @@ exports.deleteUser = function(id) {
 	return new Promise(function(resolve, reject) {
 		db(function(client, done) {
 			client.query(
-				`DELETE FROM USERS WHERE ID='${id}';`,
+				`DELETE FROM USERS WHERE ID=$1;`,
+				[id],
 				function(err, result) {
 					if (err) {
 						reject(err);
@@ -47,7 +48,8 @@ exports.getUser = function(email) {
 	return new Promise(function(resolve, reject) {
 		db(function(client, done) {
 			client.query(
-				`SELECT * FROM USERS WHERE EMAIL='${email}';`,
+				`SELECT * FROM USERS WHERE EMAIL=$1;`,
+				[email],
 				function(err, result) {
 					if (err) {
 						reject(err);
@@ -65,7 +67,8 @@ exports.getUserById = function(id) {
 	return new Promise(function(resolve, reject) {
 		db(function(client, done) {
 			client.query(
-				`SELECT * FROM USERS WHERE ID='${id}';`,
+				`SELECT * FROM USERS WHERE ID=$1;`,
+				[id],
 				function(err, result) {
 					if (err) {
 						reject(err);
