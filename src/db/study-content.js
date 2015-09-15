@@ -32,7 +32,7 @@ exports.addStudyContent = function(content) {
 			client.query(
 				`
 			INSERT INTO study_content (session_id, content_type, content_l1, content_l2, content_l3, content_l4, total_seconds, href)
-			VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;
 			`, [
 					content.session_id,
 					content.type,
