@@ -42,6 +42,7 @@ exports.post = {
           l2: trim(resource.l2),
           l3: trim(resource.l3),
           l4: trim(resource.l4),
+					href: trim(resource.href),
           time: Math.floor(resource.time / 1000)
         })
       });
@@ -54,6 +55,7 @@ exports.post = {
           l2: trim(resource.l2),
           l3: trim(resource.l3),
           l4: trim(resource.l4),
+					href: trim(resource.href),
           time: Math.floor(resource.time / 1000)
         })
       });

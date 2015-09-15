@@ -6,9 +6,9 @@ exports.createTable = function() {
 			`
 			CREATE TABLE USERS(
 				ID UUID PRIMARY KEY NOT NULL,
-				NAME CHAR(100) NOT NULL,
-				EMAIL CHAR(255) NOT NULL,
-				AVATAR CHAR(255),
+				NAME VARCHAR(100) NOT NULL,
+				EMAIL VARCHAR(255) NOT NULL,
+				AVATAR VARCHAR(255),
 				CREATED TIMESTAMP
 			)
 			`, function(err, result) {

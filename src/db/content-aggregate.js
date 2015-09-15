@@ -5,12 +5,13 @@ exports.createTable = function() {
 		client.query('CREATE TABLE CONTENT_AGGREGATE(' +
 			'ID SERIAL PRIMARY KEY NOT NULL,' +
 			'USER_ID UUID NOT NULL,' +
-			'CONTENT_TYPE CHAR(255) NOT NULL,' +
-			'CONTENT_L1 CHAR(255) NOT NULL,' +
-			'CONTENT_L2 CHAR(255),' +
-			'CONTENT_L3 CHAR(255),' +
-			'CONTENT_L4 CHAR(255),' +
+			'CONTENT_TYPE VARCHAR(255) NOT NULL,' +
+			'CONTENT_L1 VARCHAR(255) NOT NULL,' +
+			'CONTENT_L2 VARCHAR(255),' +
+			'CONTENT_L3 VARCHAR(255),' +
+			'CONTENT_L4 VARCHAR(255),' +
 			'LAST_UPDATE TIMESTAMP,' +
+			'HREF VARCHAR(255),' +
 			'TOTAL_SECONDS INT NOT NULL' +
 			');', function(err, result) {
 
@@ -80,8 +81,8 @@ exports.addUpdateContentAggregate = function(aggregate) {
             // Create a new record
 						client.query(
 							`
-							INSERT INTO content_aggregate (user_id, content_type, content_l1, content_l2, content_l3, content_l4, last_update, total_seconds)
-								VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
+							INSERT INTO content_aggregate (user_id, content_type, content_l1, content_l2, content_l3, content_l4, last_update, total_seconds, href)
+								VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
 							`, [
 								aggregate.user_id,
 								aggregate.type,
@@ -90,7 +91,8 @@ exports.addUpdateContentAggregate = function(aggregate) {
                 aggregate.l3,
 								aggregate.l4,
 								'now',
-								aggregate.time
+								aggregate.time,
+								aggregate.href
 							], (err, result) => {
 								if (err) return reject(err) && done();
 								resolve(result);
@@ -108,7 +110,7 @@ exports.getTopContent = function(user_id, count) {
 		db(function(client, done) {
 			client.query(
 				`
-				SELECT content_type, content_l1, content_l2, content_l3, content_l4, total_seconds
+				SELECT content_type, content_l1, content_l2, content_l3, content_l4, total_seconds, href
 				FROM content_aggregate
 				WHERE user_id=$1
 				ORDER BY total_seconds DESC
@@ -129,7 +131,7 @@ exports.getRecentContent = function(user_id, count) {
 		db(function(client, done) {
 			client.query(
 				`
-				SELECT content_type, content_l1, content_l2, content_l3, content_l4, last_update
+				SELECT content_type, content_l1, content_l2, content_l3, content_l4, last_update, href
 				FROM content_aggregate
 				WHERE user_id=$1
 				ORDER BY LAST_UPDATE DESC

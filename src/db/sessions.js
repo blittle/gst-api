@@ -4,7 +4,7 @@ exports.createTable = () => {
 	db((client, done) => {
 		client.query('CREATE TABLE SESSIONS(' +
 			'ID SERIAL PRIMARY KEY NOT NULL,' +
-			'TOKEN CHAR(255) NOT NULL,' +
+			'TOKEN VARCHAR(255) NOT NULL,' +
 			'USER_ID UUID NOT NULL,' +
 			'CREATED TIMESTAMP' +
 			');', function(err, result) {
