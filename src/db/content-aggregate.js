@@ -163,3 +163,55 @@ exports.deleteContentAggregations = function(user_id) {
 		});
 	});
 }
+
+exports.getTotalTimeOfType = function(user_id, type) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				SELECT SUM(total_seconds) FROM content_aggregate WHERE user_id=$1 AND content_type=$2;
+				`, [user_id, type],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}
+
+
+exports.getTotalTimeOfL1 = function(user_id, l1) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				SELECT SUM(total_seconds) FROM content_aggregate WHERE user_id=$1 AND content_l1=$2;
+				`, [user_id, l1],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}
+
+exports.getTotalTimeOfL2 = function(user_id, l1, l2) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				SELECT SUM(total_seconds) FROM content_aggregate WHERE user_id=$1 AND content_l1=$2 AND content_l2=$3;
+				`, [user_id, l1, l2],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}

@@ -6,12 +6,12 @@ var server = new Hapi.Server();
 
 var auth = require('./src/auth');
 
-require('./src/db/users.js').createTable();
-require('./src/db/sessions.js').createTable();
-require('./src/db/study-session.js').createTable();
-require('./src/db/study-content.js').createTable();
-require('./src/db/content-aggregate.js').createTable();
-require('./src/db/day-aggregate.js').createTable();
+// require('./src/db/users.js').createTable();
+// require('./src/db/sessions.js').createTable();
+// require('./src/db/study-session.js').createTable();
+// require('./src/db/study-content.js').createTable();
+// require('./src/db/content-aggregate.js').createTable();
+// require('./src/db/day-aggregate.js').createTable();
 
 server.connection({
 	host: '0.0.0.0',
@@ -77,7 +77,8 @@ server.register(require('hapi-auth-jwt2'), function(err) {
 	require('./src/routes/users').remove,
 	require('./src/routes/study-session').post,
 	require('./src/routes/study-content').dayAggregation,
-	require('./src/routes/study-content').getContent
+	require('./src/routes/study-content').getContent,
+	require('./src/routes/study-content').getBadges,
 	])
 });
 

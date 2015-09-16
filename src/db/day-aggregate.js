@@ -114,3 +114,21 @@ exports.deleteDayAggregations = function(user_id) {
 		});
 	});
 }
+
+
+exports.getTotalStudyTime = function(user_id) {
+	return new Promise((resolve, reject) => {
+		db(function(client, done) {
+			client.query(
+				`
+				SELECT SUM(total_seconds) FROM day_aggregate WHERE user_id=$1
+				`, [user_id],
+				(err, result) => {
+					if (err) return reject(err) && done();
+					resolve(result);
+					done();
+				}
+			)
+		});
+	});
+}
